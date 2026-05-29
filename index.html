@@ -3,37 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔥 Shazam - Kraft Land FF</title>
+<title>🔥 Shazam Tutorial | Kraft Land FF</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#121212;color:#fff;padding:10px}
 .container{max-width:480px;margin:auto}
-h1{text-align:center;font-size:28px;margin:15px 0;animation:cor 3s infinite;font-weight:bold}
-@keyframes cor{0%{color:#E50914}25%{color:#FFD700}50%{color:#00C853}75%{color:#0088ff}100%{color:#E50914}}
-.cartao{background:#1E1E1E;border:2px solid #333;border-radius:12px;padding:15px;margin:12px 0}
-.cartao img{width:100%;height:auto;border-radius:8px;margin-bottom:12px;object-fit:cover;display:block}
-.titulo{color:#FFD700;font-size:20px;font-weight:bold;margin-bottom:8px;line-height:1.3}
-.descricao{color:#ccc;font-size:15px;margin-bottom:12px;line-height:1.5;white-space:normal;display:block}
-.video-container{margin:12px 0;border-radius:8px;overflow:hidden}
-.video-container iframe{width:100%;height:200px;border:0}
-.codigo-area{padding:12px;border-radius:8px;margin-top:12px;text-align:center}
-.bloqueado{background:#2b2b2b;border:1px solid #444}
-.texto-bloqueado{color:#E50914;font-weight:bold;margin-bottom:8px}
-.pontos{color:#888;font-size:18px;letter-spacing:2px}
-.liberado{background:#22382b;border:1px solid #00C853}
-.texto-liberado{color:#00C853;font-weight:bold;margin-bottom:8px}
-.codigo-texto{color:#fff;font-size:16px;padding:10px;background:#1a1a1a;border-radius:6px;word-wrap:break-word;margin:8px 0;min-height:40px;display:flex;align-items:center;justify-content:center;line-height:1.4}
-.botao-copiar{background:#FFD700;color:#000;border:none;padding:10px 16px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%;font-size:15px;margin-top:5px}
+
+/* CABEÇALHO */
+.header{text-align:center;margin-bottom:20px}
+.header h1{font-size:26px;font-weight:bold;color:#ffcc00;display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0}
+.sincronizado{background:#000;border:1px solid #00c853;color:#00c853;padding:6px 12px;border-radius:20px;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.sincronizado::before{content:'';width:8px;height:8px;background:#00c853;border-radius:50%;display:inline-block}
+
+/* CARD */
+.cartao{background:#1e1e1e;border-radius:12px;overflow:hidden;margin:15px 0;border:1px solid #333}
+.cartao-topo{display:flex;gap:12px;padding:12px;align-items:flex-start}
+.cartao img{width:120px;height:90px;border-radius:8px;object-fit:cover}
+.cartao-info{flex:1}
+.titulo{color:#ffcc00;font-size:17px;font-weight:bold;margin-bottom:6px}
+.descricao{color:#ddd;font-size:14px;line-height:1.4}
+
+/* BLOQUEADO */
+.aviso-bloqueado{color:#ff4444;font-size:14px;font-weight:bold;padding:8px 12px;border-top:1px solid #333;border-bottom:1px solid #333;display:flex;align-items:center;gap:6px}
+.aviso-bloqueado::before{content:'🔒'}
+.codigo-traco{padding:12px;text-align:center;background:#252525;margin:0 12px;border-radius:6px;margin-bottom:10px}
+.pontos{color:#666;font-size:20px;letter-spacing:4px}
+.botao-oculto{background:#333;color:#999;border:none;padding:8px 16px;border-radius:6px;width:calc(100% - 24px);margin:0 12px 12px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px}
+.botao-oculto::before{content:'🔒'}
+
+/* LIBERADO */
+.aviso-liberado{color:#00c853;font-size:14px;font-weight:bold;padding:8px 12px;border-top:1px solid #333;border-bottom:1px solid #333;display:flex;align-items:center;gap:6px}
+.aviso-liberado::before{content:'✅'}
+.codigo-texto{background:#1a1a1a;color:#fff;padding:12px;border-radius:6px;margin:0 12px 10px;word-wrap:break-word;overflow-wrap:break-word;min-height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1.4}
+.botao-copiar{background:#ffcc00;color:#000;border:none;padding:10px 16px;border-radius:6px;width:calc(100% - 24px);margin:0 12px 12px;font-weight:bold;cursor:pointer}
 .botao-copiar:active{transform:scale(0.98)}
-.aviso-copiado{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#00C853;color:#fff;padding:10px 20px;border-radius:8px;z-index:999;display:none;font-weight:bold}
+
+/* AVISO */
+.aviso-copiado{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#00c853;color:#fff;padding:10px 20px;border-radius:8px;z-index:999;display:none;font-weight:bold}
 </style>
 </head>
 <body>
 <div class="aviso-copiado" id="aviso">COPIADO COM SUCESSO! ✅</div>
+
 <div class="container">
-<h1>🔥 SHAZAM 🔥</h1>
-<div id="lista-itens"></div>
+  <!-- CABEÇALHO COM SEU NOME COMPLETO -->
+  <div class="header">
+    <h1>🔥 Shazam Tutorial 🔥 | Kraft Land FF</h1>
+    <div class="sincronizado">SINCRONIZADO AO VIVO</div>
+  </div>
+
+  <div id="lista-itens"></div>
 </div>
+
 <script>
 const ID_PLANILHA = "1qVFFrI8lmNO1BFKjVzun0c1k_iBXeT5-8ooxPkSxUG4";
 const ABA = "Página1";
@@ -46,56 +67,34 @@ window.onload = () => {
     dados.forEach((linha, index) => {
       if(!linha.nome) return;
 
-      // 🖼️ COLUNA D: FOTO (no seu está como 'url')
-      let imagemHtml = "";
-      if(linha.url && linha.url.trim() !== "") {
-        imagemHtml = `<img src="${linha.url.trim()}" alt="Imagem do item">`;
-      }
+      let imagemHtml = linha.url ? `<img src="${linha.url.trim()}" alt="Imagem">` : "";
+      let descricaoHtml = linha.descricao ? `<p class="descricao">${linha.descricao.trim()}</p>` : "";
+      let codigoDoItem = linha.codigo ? linha.codigo.trim() : "";
 
-      // 📝 COLUNA B: DESCRIÇÃO (só aparece se tiver algo)
-      let descricaoHtml = "";
-      if(linha.descricao && linha.descricao.trim() !== "") {
-        descricaoHtml = `<p class="descricao">${linha.descricao.trim()}</p>`;
-      }
+      let liberado = (linha.liberado || "").toString().trim().toLowerCase() === "sim";
 
-      // 📺 COLUNA E: VÍDEO
-      let videoHtml = "";
-      if(linha.video_url && linha.video_url.includes("youtu")){
-        let vidId = linha.video_url.includes("watch?v=") ? linha.video_url.split("watch?v=")[1].split("&")[0] : linha.video_url.split("/").pop();
-        videoHtml = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${vidId}" allowfullscreen></iframe></div>`;
-      }
-
-      // 🔑 COLUNA C: CÓDIGO (AQUI É O PRINCIPAL! AGORA LÊ CERTO DA COLUNA C)
-      let codigoDoItem = linha.codigo ? linha.codigo.trim() : "CÓDIGO VAZIO";
-
-      // 🔓 COLUNA F: LIBERADO (sim / nao)
-      let liberadoTexto = (linha.liberado || "").toString().trim().toLowerCase();
-      let estaLiberado = liberadoTexto === "sim";
-
-      // 🟩 SE LIBERADO: MOSTRA O CÓDIGO DA COLUNA C
       let codigoHtml = "";
-      if(estaLiberado){
+      if(liberado){
         codigoHtml = `
-        <div class="codigo-area liberado">
-          <p class="texto-liberado">✅ CÓDIGO REVELADO</p>
-          <div class="codigo-texto" id="codigo${index}">${codigoDoItem}</div>
-          <button class="botao-copiar" onclick="copiarCodigo('codigo${index}')">📋 COPIAR CÓDIGO</button>
-        </div>`;
+        <div class="aviso-liberado">✅ CÓDIGO REVELADO</div>
+        <div class="codigo-texto" id="codigo${index}">${codigoDoItem}</div>
+        <button class="botao-copiar" onclick="copiarCodigo('codigo${index}')">📋 COPIAR CÓDIGO</button>`;
       } else {
         codigoHtml = `
-        <div class="codigo-area bloqueado">
-          <p class="texto-bloqueado">🔒 CÓDIGO BLOQUEADO</p>
-          <div class="pontos">•••••••••••••••••</div>
-        </div>`;
+        <div class="aviso-bloqueado">🔒 CÓDIGO BLOQUEADO – ASSISTA AO VÍDEO NO CANAL PARA LIBERAR!</div>
+        <div class="codigo-traco"><div class="pontos">•••••••••••••••••</div></div>
+        <button class="botao-oculto">🔒 CÓDIGO OCULTO</button>`;
       }
 
-      // 📦 MONTA TUDO NA ORDEM CERTA
       html += `
       <div class="cartao">
-        ${imagemHtml}
-        <h3 class="titulo">${linha.nome.trim()}</h3>
-        ${descricaoHtml}
-        ${videoHtml}
+        <div class="cartao-topo">
+          ${imagemHtml}
+          <div class="cartao-info">
+            <h3 class="titulo">${linha.nome.trim()}</h3>
+            ${descricaoHtml}
+          </div>
+        </div>
         ${codigoHtml}
       </div>`;
     });
@@ -103,7 +102,6 @@ window.onload = () => {
   });
 };
 
-// 📬 FUNÇÃO COPIAR FUNCIONANDO
 function copiarCodigo(id) {
   const texto = document.getElementById(id).innerText.trim();
   navigator.clipboard.writeText(texto).then(() => {
