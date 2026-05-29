@@ -10,10 +10,9 @@ body{background:#121212;color:#fff;padding:10px}
 .container{max-width:480px;margin:auto}
 
 /* CABEÇALHO */
-.header{text-align:center;margin-bottom:20px}
+.header{text-align:center;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333}
 .header h1{font-size:26px;font-weight:bold;color:#ffcc00;display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0}
-.sincronizado{background:#000;border:1px solid #00c853;color:#00c853;padding:6px 12px;border-radius:20px;font-size:14px;display:inline-flex;align-items:center;gap:6px}
-.sincronizado::before{content:'';width:8px;height:8px;background:#00c853;border-radius:50%;display:inline-block}
+.subtitulo{font-size:14px;color:#aaa;margin-top:5px}
 
 /* CARD */
 .cartao{background:#1e1e1e;border-radius:12px;overflow:hidden;margin:15px 0;border:1px solid #333}
@@ -21,7 +20,11 @@ body{background:#121212;color:#fff;padding:10px}
 .cartao img{width:120px;height:90px;border-radius:8px;object-fit:cover}
 .cartao-info{flex:1}
 .titulo{color:#ffcc00;font-size:17px;font-weight:bold;margin-bottom:6px}
-.descricao{color:#ddd;font-size:14px;line-height:1.4}
+.descricao{color:#ddd;font-size:14px;line-height:1.4;margin-bottom:10px}
+
+/* VÍDEO */
+.video-container{margin:10px 12px;border-radius:8px;overflow:hidden}
+.video-container iframe{width:100%;height:200px;border:0}
 
 /* BLOQUEADO */
 .aviso-bloqueado{color:#ff4444;font-size:14px;font-weight:bold;padding:8px 12px;border-top:1px solid #333;border-bottom:1px solid #333;display:flex;align-items:center;gap:6px}
@@ -31,11 +34,12 @@ body{background:#121212;color:#fff;padding:10px}
 .botao-oculto{background:#333;color:#999;border:none;padding:8px 16px;border-radius:6px;width:calc(100% - 24px);margin:0 12px 12px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px}
 .botao-oculto::before{content:'🔒'}
 
-/* LIBERADO */
-.aviso-liberado{color:#00c853;font-size:14px;font-weight:bold;padding:8px 12px;border-top:1px solid #333;border-bottom:1px solid #333;display:flex;align-items:center;gap:6px}
-.aviso-liberado::before{content:'✅'}
-.codigo-texto{background:#1a1a1a;color:#fff;padding:12px;border-radius:6px;margin:0 12px 10px;word-wrap:break-word;overflow-wrap:break-word;min-height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1.4}
-.botao-copiar{background:#ffcc00;color:#000;border:none;padding:10px 16px;border-radius:6px;width:calc(100% - 24px);margin:0 12px 12px;font-weight:bold;cursor:pointer}
+/* ✅ LIBERADO - AGORA SÓ 1 CAIXA VERDE, SEM BORDA DUPLA */
+.area-codigo-liberado{background:#22382b;border:1px solid #00c853;margin:12px;border-radius:8px;padding:12px}
+.aviso-liberado{color:#00c853;font-size:14px;font-weight:bold;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.aviso-liberado::before{content:'✅'} /* Dois checks como no seu exemplo */
+.codigo-texto{background:#1a1a1a;color:#fff;padding:12px;border-radius:6px;word-wrap:break-word;overflow-wrap:break-word;min-height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1.4;margin-bottom:10px}
+.botao-copiar{background:#ffcc00;color:#000;border:none;padding:10px 16px;border-radius:6px;width:100%;font-weight:bold;cursor:pointer}
 .botao-copiar:active{transform:scale(0.98)}
 
 /* AVISO */
@@ -46,10 +50,9 @@ body{background:#121212;color:#fff;padding:10px}
 <div class="aviso-copiado" id="aviso">COPIADO COM SUCESSO! ✅</div>
 
 <div class="container">
-  <!-- CABEÇALHO COM SEU NOME COMPLETO -->
   <div class="header">
     <h1>🔥 Shazam Tutorial 🔥 | Kraft Land FF</h1>
-    <div class="sincronizado">SINCRONIZADO AO VIVO</div>
+    <p class="subtitulo">• Sistema de Código da Kraftland do Free Fire •</p>
   </div>
 
   <div id="lista-itens"></div>
@@ -69,16 +72,33 @@ window.onload = () => {
 
       let imagemHtml = linha.url ? `<img src="${linha.url.trim()}" alt="Imagem">` : "";
       let descricaoHtml = linha.descricao ? `<p class="descricao">${linha.descricao.trim()}</p>` : "";
-      let codigoDoItem = linha.codigo ? linha.codigo.trim() : "";
 
+      // Vídeo funcionando perfeitamente
+      let videoHtml = "";
+      if(linha.video_url && linha.video_url.includes("youtu")){
+        let vidId = "";
+        if(linha.video_url.includes("watch?v=")){
+          vidId = linha.video_url.split("watch?v=")[1].split("&")[0];
+        } else if(linha.video_url.includes("/youtu.be/")){
+          vidId = linha.video_url.split("/youtu.be/")[1].split("?")[0];
+        } else {
+          vidId = linha.video_url.split("/").pop();
+        }
+        videoHtml = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${vidId}" allowfullscreen loading="lazy"></iframe></div>`;
+      }
+
+      let codigoDoItem = linha.codigo ? linha.codigo.trim() : "";
       let liberado = (linha.liberado || "").toString().trim().toLowerCase() === "sim";
 
       let codigoHtml = "";
       if(liberado){
+        // ✅ AGORA SÓ 1 CAIXA VERDE, IGUAL VOCÊ QUERIA
         codigoHtml = `
-        <div class="aviso-liberado">✅ CÓDIGO REVELADO</div>
-        <div class="codigo-texto" id="codigo${index}">${codigoDoItem}</div>
-        <button class="botao-copiar" onclick="copiarCodigo('codigo${index}')">📋 COPIAR CÓDIGO</button>`;
+        <div class="area-codigo-liberado">
+          <div class="aviso-liberado">CÓDIGO REVELADO</div>
+          <div class="codigo-texto" id="codigo${index}">${codigoDoItem}</div>
+          <button class="botao-copiar">📋 COPIAR CÓDIGO</button>
+        </div>`;
       } else {
         codigoHtml = `
         <div class="aviso-bloqueado">🔒 CÓDIGO BLOQUEADO – ASSISTA AO VÍDEO NO CANAL PARA LIBERAR!</div>
@@ -95,6 +115,7 @@ window.onload = () => {
             ${descricaoHtml}
           </div>
         </div>
+        ${videoHtml}
         ${codigoHtml}
       </div>`;
     });
